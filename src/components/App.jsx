@@ -1,81 +1,61 @@
 import { Component } from 'react';
-import Buttons from './Buttons/Buttons';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import Statistics from './Statistics/Statistics';
+import Section from './Section/Section';
+import Notification from './Notification/Notification';
 
 class App extends Component {
-  // state = {
-  //   good: 0,
-  //   neutral: 0,
-  //   bad: 0,
-  // };
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
 
-  // add = () => {
-  //   this.setState({ good: this.state.good + 1 });
-  // };
+  addCount = ({ target }) => {
+    const { name } = target;
+    this.setState(prevState => {
+      return { [name]: prevState[target.name] + 1 };
+    });
+  };
+
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    return Number(
+      Math.round((this.state.good / this.countTotalFeedback()) * 100)
+    );
+  };
 
   render() {
-    // const { good, neutral, bad } = this.state;
-    // const { add } = this;
+    const { good, neutral, bad } = this.state;
+    const total = this.countTotalFeedback();
+    const positive = this.countPositiveFeedbackPercentage();
+    const addCount = this.addCount;
+    const state = this.state;
+
     return (
       <>
-        <Buttons init={0} />
-        {/* {(good, neutral, bad)}
-        <button type="button" onClick={add}>
-          good
-        </button>
-        <button type="button" onClick={add}>
-          neutral
-        </button>
-        <button type="button" onClick={add}>
-          bad
-        </button> */}
+        <Section title="Please leave your feedback">
+          <FeedbackOptions options={state} addCount={addCount} />
+        </Section>
+        <Section title="Statistics">
+          {positive ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={total}
+              positivePercentage={positive}
+            />
+          ) : (
+            <Notification message="There is no feedback" />
+          )}
+        </Section>
       </>
     );
   }
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-  //
-
-  // statIncrease = ({ target }) => {
-    // const { name } = target;
-    // this.setState(prevState => {
-    //   return { [name]: prevState[target.name] + 1 };
-    // });
-  // };
-
-  // render() {
-  //   const { good, neutral, bad } = this.state;
-
-  //   return (
-  //     <div className="App">
-  //       <p>Please leave your feedback</p>
-  //       <div>
-  //         <button name="good" type="button" onClick={this.statIncrease}>
-  //           good
-  //         </button>
-  //         <button name="neutral" type="button" onClick={this.statIncrease}>
-  //           neutral
-  //         </button>
-  //         <button name="bad" type="button" onClick={this.statIncrease}>
-  //           bad
-  //         </button>
-  //       </div>
-        // <div>
-        //   <p>Statistics</p>
-        //   <ul>
-        //     <li>Good: {good}</li>
-        //     <li>Neutral: {neutral}</li>
-        //     <li>Bad: {bad}</li>
-        //   </ul>
-        // </div>
-  //     </div>
-  //   );
-  // }
 }
 export { App };
