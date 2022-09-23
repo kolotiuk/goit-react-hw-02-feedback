@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import s from './feedbackOptions.module.scss';
 
 const FeedbackOptions = ({ options, addCount }) => {
@@ -23,3 +24,11 @@ const FeedbackOptions = ({ options, addCount }) => {
 };
 
 export default FeedbackOptions;
+
+PropTypes.propTypes = {
+  options: PropTypes.objectOf({
+    good: PropTypes.number.isRequired,
+    neutral: PropTypes.number.isRequired,
+    bad: PropTypes.number.isRequired,
+  }),
+};
