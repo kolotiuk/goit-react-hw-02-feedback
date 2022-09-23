@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
-import Statistics from './Statistics/Statistics';
-import Section from './Section/Section';
-import Notification from './Notification/Notification';
+import FeedbackOptions from './FeedbackOptions';
+import Statistics from './Statistics';
+import Section from './Section';
+import Notification from './Notification';
 
 class App extends Component {
   state = {
@@ -35,7 +35,7 @@ class App extends Component {
     const state = this.state;
 
     return (
-      <>
+      <div style={{ marginLeft: '50px' }}>
         <Section title="Please leave your feedback">
           <FeedbackOptions options={state} addCount={addCount} />
         </Section>
@@ -52,7 +52,7 @@ class App extends Component {
             <Notification message="There is no feedback" />
           )}
         </Section>
-      </>
+      </div>
     );
   }
 }
